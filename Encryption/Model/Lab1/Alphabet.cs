@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Encryption.Model
+namespace Encryption.Model.Lab1
 {
     internal class Alphabet
     {
@@ -58,10 +58,10 @@ namespace Encryption.Model
             }
         }
 
-        public double ChiSquaredCalculateForSymbol(Char symbol)
+        public double ChiSquaredCalculateForSymbol(char symbol)
         {
-           double b = Math.Pow(_alphabetProbobility[symbol] - _alphabetRussianProbobility[symbol], 2) / _alphabetRussianProbobility[symbol];
-           return b;
+            double b = Math.Pow(_alphabetProbobility[symbol] - _alphabetRussianProbobility[symbol], 2) / _alphabetRussianProbobility[symbol];
+            return b;
         }
 
         public void FillDictionaryProbability(string message)
@@ -127,7 +127,7 @@ namespace Encryption.Model
         {
             for (int i = 0; i < 32; i++)
             {
-                char letter = _alphabet[(i + k)%32];
+                char letter = _alphabet[(i + k) % 32];
                 _encryptedAlphabet.Add(i, letter);
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Encryption.Infastructure;
 using Encryption.Model;
+using Encryption.Model.Lab1;
 using Encryption.ViewModel.Base;
 using Microsoft.Win32;
 using System;

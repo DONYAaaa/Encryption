@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
-using Encryption.Model;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Documents;
 using System.IO.Packaging;
+using Encryption.Model.Lab1;
 
 namespace Encryption.ViewModel
 {
