@@ -17,10 +17,10 @@ namespace Encryption.ViewModel
         public ObservableCollection<StrochkaFSCR> Strochechki = new ObservableCollection<StrochkaFSCR>();
 
         private string _startMessage;
-        public string startMessage
+        public int startMessage
         {
-            get { return _startMessage; }
-            set { Set(ref _startMessage, value); }
+            get { if (_startMessage != null) return ChekingInput.ProcessInput(_startMessage); else return 0; }
+            set { Set(ref _startMessage, value.ToString()); }
         }
 
         private int _N = 32;
