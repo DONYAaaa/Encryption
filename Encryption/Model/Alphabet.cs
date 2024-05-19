@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Encryption.Model
 {
@@ -22,6 +23,13 @@ namespace Encryption.Model
             set { _alphabetProbobility = value; }
         }
 
+        private Dictionary<char, double> _alphabetRussianProbobility = new Dictionary<char, double>();
+        public Dictionary<char, double> AlphabeticRussianProbobility
+        {
+            get { return _alphabetRussianProbobility; }
+            set { _alphabetRussianProbobility = value; }
+        }
+
         private Dictionary<int, char> _encryptedAlphabet = new Dictionary<int, char>();
         public Dictionary<int, char> encryptedAlphabetic
         {
@@ -33,6 +41,12 @@ namespace Encryption.Model
         {
             FillDictionary();
             FillEncryptedDictionary(k);
+            FillDictionaryRussianProbobility();
+        }
+
+        public Alphabet()
+        {
+            FillDictionary();
         }
 
         private void FillDictionary()
@@ -44,9 +58,34 @@ namespace Encryption.Model
             }
         }
 
-        private void FillDictionaryProbobility()
+        public double ChiSquaredCalculateForSymbol(Char symbol)
         {
-            _alphabetProbobility = new Dictionary<char, double>()
+           double b = Math.Pow(_alphabetProbobility[symbol] - _alphabetRussianProbobility[symbol], 2) / _alphabetRussianProbobility[symbol];
+           return b;
+        }
+
+        public void FillDictionaryProbability(string message)
+        {
+            string cleanedMessage = new string(message.Where(c => !char.IsPunctuation(c) && !char.IsWhiteSpace(c)).ToArray());
+            int count = cleanedMessage.Length;
+
+            foreach (char symbol in cleanedMessage)
+            {
+                if (_alphabetProbobility.ContainsKey(symbol))
+                {
+                    _alphabetProbobility[symbol]++;
+                }
+                else
+                {
+                    _alphabetProbobility.Add(symbol, 1);
+                }
+            }
+
+        }
+
+        private void FillDictionaryRussianProbobility()
+        {
+            _alphabetRussianProbobility = new Dictionary<char, double>()
                  {
             {'а', 8.04},
             {'б', 1.59},
@@ -98,7 +137,6 @@ namespace Encryption.Model
             string encryptedMessage = "";
             if (message.Length > 0 && message != null)
             {
-
                 for (int i = 0; i < message.Length; i++)
                 {
                     foreach (var item in _alphabet)
@@ -121,6 +159,8 @@ namespace Encryption.Model
             }
             return encryptedMessage;
         }
+
+
 
     }
 }
