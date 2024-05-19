@@ -4,6 +4,7 @@ using Encryption.ViewModel.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Encryption.ViewModel
             get { return _N; }
             set
             {
-                if (value >= 0 && value <= 50)
+                if (value >= 3 && value <= 50)
                 {
                     _N = value;
                     OnPropertyChanged(nameof(N));
@@ -43,8 +44,8 @@ namespace Encryption.ViewModel
 
         #region Расшифровать
 
-        public ICommand GetDecryptCommand { get; }
-        private bool CanDecryptCommand(object p)
+        public ICommand GetCalculateNODCommand { get; }
+        private bool CanODecryptCommand(object p)
         {
             if (true)
             {
@@ -55,19 +56,28 @@ namespace Encryption.ViewModel
                 return false;
             }
         }
+
         private void OnDecryptCommand(object p)
         {
-
+            Strochechki.Clear();
+            FSCR fSCR = new FSCR(startMessage, N);
+            foreach (var item in fSCR._strochechki)
+            {
+                Strochechki.Add(item);
+            }
+            OnPropertyChanged(nameof(Strochechki));
         }
 
         #endregion
+
+
 
         #endregion
 
 
         public Lab5VM()
         {
-            GetDecryptCommand = new LambdaCommand(OnDecryptCommand, CanDecryptCommand);
+            GetCalculateNODCommand = new LambdaCommand(OnDecryptCommand, CanODecryptCommand);
         }
     }
 }

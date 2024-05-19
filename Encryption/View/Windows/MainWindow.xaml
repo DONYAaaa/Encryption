@@ -354,18 +354,17 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="2*"/>
-                        <RowDefinition Height="6*"/>
-                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="7*"/>
+                        <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
 
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="11*"/>
-                            <ColumnDefinition Width="201*"/>
-                            <ColumnDefinition Width="53*"/>
+                            <ColumnDefinition Width="7*"/>
+                            <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Margin="5,5,5,5" Grid.ColumnSpan="2">
+                        <StackPanel Margin="5,5,5,5" >
                             <Label Content="Исходная строка" Margin="0, 0, 0, 5"/>
                             <TextBox Text="{Binding startMessage}"/>
                         </StackPanel>
@@ -387,52 +386,65 @@
                                     Height="20"
                                     Margin="5"
                                     Value="{Binding N}"
-                                    Minimum="0"
+                                    Minimum="3"
                                     Maximum="50"/>
                         </StackPanel>
                     </Grid>
 
-                    <ScrollViewer Grid.Row="1">
-                        <DataGrid Margin="10, 0, 10, 0" Name="FCSR" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.Columns>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
 
-                                <DataGridTextColumn Binding="{Binding Path=ShiftRegister}"  MinWidth="80">
-                                    <DataGridTextColumn.Header>
-                                        <DataGridColumnHeader Content="Регистр сдвига" HorizontalAlignment="Center"/>
-                                    </DataGridTextColumn.Header>
-                                </DataGridTextColumn>
+                        
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <DataGrid Margin="10, 0, 10, 0" Name="FCSR" AutoGenerateColumns="False" CanUserAddRows="False">
+                                <DataGrid.Columns>
 
-                                <DataGridTextColumn Binding="{Binding Path=TransferRegister}" MinWidth="80">
-                                    <DataGridTextColumn.Header>
-                                        <DataGridColumnHeader Content="Регистр переноса" HorizontalAlignment="Center"/>
-                                    </DataGridTextColumn.Header>
-                                </DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding Path=ShiftRegister}" IsReadOnly="True"  MinWidth="80">
+                                        <DataGridTextColumn.Header>
+                                            <DataGridColumnHeader Content="Регистр сдвига" HorizontalAlignment="Center"/>
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
 
-                                <DataGridTextColumn Binding="{Binding Path=OutputBit}" MinWidth="80">
-                                    <DataGridTextColumn.Header>
-                                        <DataGridColumnHeader Content="Выходной бит" HorizontalAlignment="Center"/>
-                                    </DataGridTextColumn.Header>
-                                </DataGridTextColumn>
+                                    <DataGridTextColumn Binding="{Binding Path=TransferRegister}" IsReadOnly="True" MinWidth="80">
+                                        <DataGridTextColumn.Header>
+                                            <DataGridColumnHeader Content="Регистр переноса" HorizontalAlignment="Center"/>
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
 
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </ScrollViewer>
+                                    <DataGridTextColumn Binding="{Binding Path=OutputBit}" IsReadOnly="True" MinWidth="80">
+                                        <DataGridTextColumn.Header>
+                                            <DataGridColumnHeader Content="Выходной бит" HorizontalAlignment="Center"/>
+                                        </DataGridTextColumn.Header>
+                                    </DataGridTextColumn>
 
-                    <StackPanel Grid.Row="2" Margin="5">
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </ScrollViewer>
 
-                        <Grid Margin="0, 10, 0, 0">
+                        <StackPanel VerticalAlignment="Center" Grid.Column = "1">
+                            <Button Content="Преобразовать в число"
+                                    Width="180" Height="23"
+                                    Click="Button_Click"/>
+                            <Label Content="Полученное число" Margin ="10" 
+                                   HorizontalAlignment="Center"/>
+                            
+                            <TextBox IsReadOnly="True" 
+                                     Name="Number" Width="180"
+                                     HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                
+                    <StackPanel Grid.Row="2" Margin="5" Name="hre">
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
 
-                            <Button Grid.ColumnSpan="2" 
-                                    Command="{Binding GetDecryptCommand}" 
-                                    Content="Зашифровать" 
-                                    Margin="10, 0, 10, 0" 
-                                    Height="40" Width="140"/>
-                        </Grid>
+                        <Button Command="{Binding GetCalculateNODCommand}"
+                                Content="Зашифровать"
+                                Width="180" Height="35"
+                                Margin="15"/>
+
                     </StackPanel>
                 </Grid>
             </TabItem>

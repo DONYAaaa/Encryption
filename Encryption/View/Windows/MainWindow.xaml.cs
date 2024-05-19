@@ -37,9 +37,46 @@ namespace Encryption
 
             Lab5VM lab5VM = new Lab5VM();
             Lab5.DataContext = lab5VM;
-            DG.ItemsSource = lab5VM.Strochechki;
+            FCSR.ItemsSource = lab5VM.Strochechki;
+            hre.DataContext = lab5VM;
 
             Tab.SelectedIndex = 4;
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string binaryString = GetBinaryStringFromSelectedRows(FCSR);
+            if (!string.IsNullOrEmpty(binaryString))
+            {
+                int decimalValue = ConvertBinaryStringToDecimal(binaryString);
+                Number.Text = decimalValue.ToString();
+            }
+        }
+
+        private string GetBinaryStringFromSelectedRows(DataGrid dataGrid)
+        {
+            StringBuilder binaryStringBuilder = new StringBuilder();
+
+            foreach (var item in dataGrid.SelectedItems)
+            {
+                var row = dataGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+                if (row != null)
+                {
+                    var cell = dataGrid.Columns[2].GetCellContent(row) as TextBlock;
+                    if (cell != null && (cell.Text == "0" || cell.Text == "1"))
+                    {
+                        binaryStringBuilder.Append(cell.Text);
+                    }
+                }
+            }
+
+            return binaryStringBuilder.ToString();
+        }
+
+        private int ConvertBinaryStringToDecimal(string binaryString)
+        {
+            return Convert.ToInt32(binaryString, 2);
         }
     }
 }
